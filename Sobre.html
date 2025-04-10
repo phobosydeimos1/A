@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sobre Interactivo</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #f7b267, #f79d65, #f4845f, #f27059, #e94f37);
+      font-family: 'Arial', sans-serif;
+      color: white;
+    }
+
+    #container {
+      text-align: center;
+      width: 100%;
+    }
+
+    #envelope-container {
+      position: relative;
+      display: inline-block;
+      perspective: 1000px; /* Permite animaciones 3D */
+    }
+
+    #envelope {
+      width: 200px;
+      height: 100px;
+      background-color: #f5f5dc;
+      border: 2px solid #ccc;
+      cursor: pointer;
+      position: relative;
+      z-index: 2;
+    }
+
+    #flap {
+      position: absolute;
+      top: -50px;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-left: 100px solid transparent;
+      border-right: 100px solid transparent;
+      border-bottom: 50px solid #f5f5dc;
+      transition: transform 1s ease-in-out;
+      transform-origin: bottom center;
+      transform-style: preserve-3d;
+      backface-visibility: hidden;
+      z-index: 3;
+    }
+
+    #flap.opened {
+      transform: rotateX(180deg);
+    }
+
+    #instruction, #message, #response-buttons, #finalMessage, #extraButtons, #smiley {
+      margin-top: 20px;
+      color: white;
+    }
+
+    .buttons button {
+      margin: 0 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .green { background-color: #4CAF50; color: white; }
+    .purple { background-color: #8A2BE2; color: white; }
+    .red { background-color: #f44336; color: white; }
+    .blue { background-color: #2196F3; color: white; }
+
+  </style>
+</head>
+<body>
+  <div id="container">
+    <div id="envelope-container">
+      <div id="flap"></div>
+      <div id="envelope" onclick="openEnvelope()"></div>
+    </div>
+    <div id="instruction">Toca el sobre para abrirlo</div>
+    <div id="message"></div>
+    <div id="response-buttons" style="display: none;">
+      <button class="green" onclick="handleYes()">Gracias jeje pues solo me avisas.</button>
+      <button class="purple" onclick="handleMaybe()">No estoy segura</button>
+      <button class="red" onclick="handleNo()">No, no creo que sea buena idea</button>
+    </div>
+    <div id="finalMessage"></div>
+    <div id="extraButtons"></div>
+    <div id="smiley"></div>
+  </div>
+
+  <script>
+    function openEnvelope() {
+      document.getElementById("flap").classList.add("opened");
+      document.getElementById("instruction").style.display = 'none';
+      document.getElementById("message").innerText = "*sale una hoja xd*";
+
+      setTimeout(() => {
+        document.getElementById("message").innerText = "Hola, ¿Puedo recogerte mañana a tu trabajo?\nsolamente para hablar, ó solo contarte todo lo interesante detrás del video que hice, ¿Que dices?🥲";
+        setTimeout(() => {
+          document.getElementById("response-buttons").style.display = 'block';
+        }, 1500);
+      }, 3000);
+    }
+
+    function handleYes() {
+      document.getElementById("container").innerHTML = '<div id="finalMessage">:o</div>';
+      setTimeout(() => {
+        document.getElementById("finalMessage").innerText = ':3';
+        setTimeout(() => {
+          document.getElementById("finalMessage").innerHTML += '<div>Gracias jeje pues solo enviame un sticker y yo entenderé cual decisión seleccionaste</div>';
+        }, 1500);
+      }, 1500);
+    }
+
+    function handleNo() {
+      document.getElementById("container").innerHTML = '<div id="finalMessage">No pasa nada jaja🙂 no contestes por whats y yo sabré que elegiste que mejor no.</div>';
+      setTimeout(() => {
+        document.getElementById("finalMessage").innerText = ':)';
+      }, 8000);
+    }
+
+    function handleMaybe() {
+      document.getElementById("response-buttons").style.display = 'none';
+      document.getElementById("finalMessage").innerText = 'No te comprometes a nada con esto, realmente solo me gustaría verte y charlar un poco. No debes sentirte mal si no aceptas, el "no" ya lo tenía al enviarte esto🙂';
+      setTimeout(() => {
+        document.getElementById("extraButtons").innerHTML = '<button class="blue" onclick="reloadPage()">Mmm...</button>';
+      }, 4000);
+    }
+
+    function reloadPage() {
+      location.reload();
+    }
+  </script>
+</body>
+</html>
